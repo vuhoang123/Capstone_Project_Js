@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css"
+      integrity="sha512-F7WyTLiiiPqvu2pGumDR15med0MDkUIo5VTVyyfECR5DZmCnDhti9q5VID02ItWjq6fvDfMaBaDl2J3WdL1uxA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./css/index.css" />
+    <title>Document</title>
+    <style>
+      .loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-container">
+        <!-- navPC -->
+        <nav class="nav_pc">
+          <ul class="ul-nav">
+            <li>
+              <h1>Cyber Store</h1>
+            </li>
+            <div class="ml-auto d-flex align-items-center">
+              <!-- select option -->
+              <li>
+                <select id="select">
+                  <option>All</option>
+                  <option>Iphone</option>
+                  <option>Samsung</option>
+                </select>
+                <input
+                class="btn bg-success"
+                  type="button"
+                  id="button"
+                  value="LỌC"
+                  onclick="filterByType()"
+                />
+              </li>
+              <!-- nav btn store -->
+              <li class="ml-5">
+                <label for="nav_input-show" class="nav-bar-btnStore m-auto">
+                  <i class="fa-solid fa-cart-shopping position-relative fs-2"></i>
+                  <span
+                    class="total-qty position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                    >0</span
+                  >
+                </label>
+              </li>
+              <!-- input -->
+              <input type="checkbox" class="nav_input" id="nav_input-show" />
+              <!-- nav overlay -->
+              <label for="nav_input-show" class="nav_overlay"></label>
+              <!-- sidebar nav -->
+              <div class="side-bar">
+                <label for="nav_input-show" class="nav_sideClose"> </label>
+                <h1 class="m-0 py-2" style="color: white; text-align: center">
+                  Giỏ hàng
+                  <i class="fa-solid fa-cart-shopping white"></i>
+                </h1>
+                <!-- row item -->
+                <div class="cartDiv">
+                  <div id="itemProduct"></div>
+                  <div class="final">
+                    <strong>Total: $ <span id="totalPrice"></span></strong>
+                    <!-- 2button -->
+                    <div class="final__button">
+                      <button
+                        class="btn btn-puschard d-flex"
+                        onclick="clearCart(true)"
+                      >
+                        Puschard
+                        <i class="fa-solid fa-credit-card"></i>
+                      </button>
+                      <button
+                        class="btn btn-clear d-flex"
+                        onclick="clearCart(false)"
+                      >
+                        Clear
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="product">
+        <div class="container">
+          <div class="row productList" id="productList"></div>
+        </div>
+      </section>
+    </main>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"
+      integrity="sha512-NWNl2ZLgVBoi6lTcMsHgCQyrZVFnSmcaa3zRv0L3aoGXshwoxkGs3esa9zwQHsChGRL4aLDnJjJJeP6MjPX46Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+      integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/model/Product.js"></script>
+    <script src="./js/model/CartItem.js"></script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+.phoneImg img {
+  width: auto;
+  height: 100px;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+tr {
+  transition: all 0.3s;
+  /* animation: FadeBackground 1s; */
+}
+
+@keyframes FadeBackground {
+  from {
+    background-color: transparent;
+  }
+  to {
+    background-color: #d9fae2;
+  }
+}
